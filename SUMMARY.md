@@ -1,3 +1,3 @@
 # Table of contents
 
-* [Project RedLine: An Aggressive Pentesting & Evasion Homelab](README.md)
+* [Intensive 14-Day Penetration Testing Tools Lab](README.md)
