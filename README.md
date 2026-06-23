@@ -1,7 +1,5 @@
 ---
-description: >-
-  An home lab setup for intensive testing of different tools used in offensive
-  security.
+description: Hands-on testing of different attacking tools used in offensive security.
 ---
 
 # Applied Penetration Testing Lab
