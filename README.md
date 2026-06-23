@@ -8,10 +8,10 @@ description: >-
 
 ## Nmap Scan
 
-1. Target: [scanme.nmap.org](http://scanme.nmap.org).
-2. Tool: Nmap (Aggressive Scan -A).
-3. Technical Challenges and Troubleshooting:
-   * **Issue Encountered:** During initial enumeration, the standard Nmap SYN scan (-sS) failed to return results, terminating with the error:
+* Target: [scanme.nmap.org](http://scanme.nmap.org).
+* Tool: Nmap (Aggressive Scan -A).
+* Technical Challenges and Troubleshooting:
+  * **Issue Encountered:** During initial enumeration, the standard Nmap SYN scan (-sS) failed to return results, terminating with the error:
 
 > Warning: 45.33.32.156 giving up on port because retransmission cap hit (10)
 
@@ -27,40 +27,40 @@ description: >-
 
 ## Google Dork
 
-1. Target: Ford ([ford.com](http://ford.com)) .
-2. Tool: Google Advanced Search Operators (Dork), PaGoDo.
-3. Query 1: site:[ford.com](http://ford.com) filetype:pdf “supplier”
-   * Findings: I found public “Code of Conduct” documents and technical specifications for OFTP data transfer.
-4. Query 2: site:[ford.com](http://ford.com) filetype:pdf “confidential”
-   * Findings: I found documents that have “confidential” information.
-5. Query 3: site:[ford.com](http://ford.com) filetype:pdf “internal use only”
-   * Findings: I found documents that were classified as“internal use only” and may not be resold by vendors.
-6. Query 4: site:[ford.com](http://ford.com) filetype:xlsx
-   * Findings:
-   * Exposed Staging Environments: I found several files on wwwqa (Quality Assurance) subdomains, showing that non-production environments are publicly indexed by search engines, which could expose test data or unpatched code.
-   * Internal Process Documentation: I identified a “New Hire On-Boarding: spreadsheet publicly accessible. This poses a risk of Social Engineering attacks, as the file likely contains internal workflows and tool locations.
-   * Business Intelligence Leak: I discovered a “Supplier Cost Breakdown: spreadsheet, which can potentially expose sensitive pricing strategies to competitors.
+* Target: Ford ([ford.com](http://ford.com)) .
+* Tool: Google Advanced Search Operators (Dork), PaGoDo.
+* Query 1: site:[ford.com](http://ford.com) filetype:pdf “supplier”
+  * Findings: I found public “Code of Conduct” documents and technical specifications for OFTP data transfer.
+* Query 2: site:[ford.com](http://ford.com) filetype:pdf “confidential”
+  * Findings: I found documents that have “confidential” information.
+* Query 3: site:[ford.com](http://ford.com) filetype:pdf “internal use only”
+  * Findings: I found documents that were classified as“internal use only” and may not be resold by vendors.
+* Query 4: site:[ford.com](http://ford.com) filetype:xlsx
+  * Findings:
+  * Exposed Staging Environments: I found several files on wwwqa (Quality Assurance) subdomains, showing that non-production environments are publicly indexed by search engines, which could expose test data or unpatched code.
+  * Internal Process Documentation: I identified a “New Hire On-Boarding: spreadsheet publicly accessible. This poses a risk of Social Engineering attacks, as the file likely contains internal workflows and tool locations.
+  * Business Intelligence Leak: I discovered a “Supplier Cost Breakdown: spreadsheet, which can potentially expose sensitive pricing strategies to competitors.
 
 ## **Wireshark**
 
-1. Target: [testphp.vulnweb.com](http://testphp.vulnweb.com) (Authorized testing environment).
-2. Tool: Wireshark.
-3. Objective: To capture and inspect unencrypted HTTP POST requests to identify clear-text credentials.
-4. Technical Challenges and Troubleshooting:
-   * Issue Encountered: Network traffic was not recorded when the Wireshark capture was initiated, even though I was browsing the web using firefox on Kali.
-   * **Root cause analysis:** I selected a disconnected ethernet adapter (eth0) rather than the active adapter with real time traffic (eth1).
-   * **Troubleshooting Stage:** I terminated the current capture session, then I ran the “Ip a” command in my kali terminal to determine which adapter was the active one; I then noticed eth0 and eth1 both had inet connections but when I pinged google with each adapter specifically (using “ping -I eth0/eth1 [google.com](http://google.com)”), I was able to get the active adapter. I then restarted the capture session on the eth1 network adapter showing live traffic.
-5. Process:
-   * Initiated packet capture on eth,
-   * Generated login traffic via Firefox browser,
-   * Applied display filter: {http.request.method == “POST”} to isolate form submissions.
+* Target: [testphp.vulnweb.com](http://testphp.vulnweb.com) (Authorized testing environment).
+* Tool: Wireshark.
+* Objective: To capture and inspect unencrypted HTTP POST requests to identify clear-text credentials.
+* Technical Challenges and Troubleshooting:
+  * Issue Encountered: Network traffic was not recorded when the Wireshark capture was initiated, even though I was browsing the web using firefox on Kali.
+  * **Root cause analysis:** I selected a disconnected ethernet adapter (eth0) rather than the active adapter with real time traffic (eth1).
+  * **Troubleshooting Stage:** I terminated the current capture session, then I ran the “Ip a” command in my kali terminal to determine which adapter was the active one; I then noticed eth0 and eth1 both had inet connections but when I pinged google with each adapter specifically (using “ping -I eth0/eth1 [google.com](http://google.com)”), I was able to get the active adapter. I then restarted the capture session on the eth1 network adapter showing live traffic.
+* Process:
+  * Initiated packet capture on eth,
+  * Generated login traffic via Firefox browser,
+  * Applied display filter: {http.request.method == “POST”} to isolate form submissions.
 
 <figure><img src=".gitbook/assets/Wireshark4.png" alt=""><figcaption></figcaption></figure>
 
-1. Key Findings:
-   * Successfully intercepted the HTTP body.
-   * Credential Exposure: Identification of fields “uname” and “pass” containing plaintext credentials.
-   * Security Analysis: This shows the critical risk of using HTTP. It is mandatory to use SSL/TLS (HTTPS) encryption to prevent Man-in-the-Middle (MitM) attacks.
+* Key Findings:
+  * Successfully intercepted the HTTP body.
+  * Credential Exposure: Identification of fields “uname” and “pass” containing plaintext credentials.
+  * Security Analysis: This shows the critical risk of using HTTP. It is mandatory to use SSL/TLS (HTTPS) encryption to prevent Man-in-the-Middle (MitM) attacks.
 
 ## Gobuster
 
@@ -161,8 +161,8 @@ nikto -h http://192.168.56.110
 
 #### Security analysis
 
-* The lack of security headers allows for UI redressing vulnerabilities (Clickjacking) and MIME-sniffing bypasses.&#x20;
-* Version disclosures provide an advisory footprint that helps attackers pinpoint precise public exploits.&#x20;
+* The lack of security headers allows for UI redressing vulnerabilities (Clickjacking) and MIME-sniffing bypasses.
+* Version disclosures provide an advisory footprint that helps attackers pinpoint precise public exploits.
 * Server configuration profiles must be hardened to suppress banners.
 
 ## Hydra
