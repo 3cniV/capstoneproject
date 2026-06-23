@@ -1,7 +1,3 @@
----
-description: Hands-on testing of different attacking tools used in offensive security.
----
-
 # Applied Penetration Testing Lab
 
 ## Nmap Scan
